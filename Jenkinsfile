@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('clean-workspace') {
-            steps {
-                echo 'Cleaning the workspace'
-                cleanWs()
-            }
-        }
         stage('install-dependencies and build'){
             agent{
                 docker{
