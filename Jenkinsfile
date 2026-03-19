@@ -28,6 +28,7 @@ pipeline {
                 ls -la
                 test -f build/index.html
                 npm test
+                '''
             }
         }
         
