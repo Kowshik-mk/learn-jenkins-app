@@ -2,23 +2,31 @@ pipeline {
     agent any
 
     stages {
-        stage('without-agent') {
+        stage('clean-workspace') {
             steps {
-                echo 'Hello World'
-                sh 'ls -la'
+                echo 'Cleaning the workspace'
+                cleanWs()
             }
         }
-        stage('with-docker'){
+        stage('install-dependencies and build'){
             agent{
                 docker{
-                    image 'node:16.3.0-alpine'
+                    image 'node:18.3.0-alpine'
                     reuseNode true
                 }
             }
             steps{
-                echo "docker container"
-                sh 'ls -la'
+                echo "install dependencies"
+                sh '''
+                  ls -la
+                  npm ci
+                  ls -la
+                  echo 'building app'
+                  npm run build
+                  ls -la
+                  '''
             }
         }
-    }
+        
+}
 }
