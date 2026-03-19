@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('install-dependencies and build'){
+        stage('Build'){
             agent{
                 docker{
                     image 'node:18.3.0-alpine'
@@ -19,6 +19,15 @@ pipeline {
                   npm run build
                   ls -la
                   '''
+            }
+        }
+        stage('Test'){
+            steps{
+                echo "testing the workspace"
+                sh '''
+                ls -la
+                test -f build/index.html
+                npm test
             }
         }
         
